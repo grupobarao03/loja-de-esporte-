@@ -42,6 +42,7 @@ function adicionarAoCarrinho(nomeProduto, preco, produtoId) {
 
 // Função para atualizar a exibição do estoque e desativar botão se o estoque acabar
 function atualizarEstoque(produtoId) {
+    console.log(produtoId);
     const estoqueElemento = document.getElementById(`estoque-produto-${produtoId}`);
     const botaoElemento = document.getElementById(`btn-produto-${produtoId}`);
 
