@@ -124,8 +124,12 @@ function finalizarCompra() {
         alert('Seu carrinho está vazio!');
         return;
     }
+
+    const modal = new bootstrap.Modal(
+        document.getElementById('ExemploModalCentralizado'),
+    );
+       modal.show();
     
-    alert('Compra finalizada! Obrigado pela preferência.');
     carrinho = [];
     total = 0;
     salvarCarrinho();
@@ -166,3 +170,23 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarEstoque(produtoId);
     }
 });
+function finalizarCompra() {
+    atualizarCarrinho();
+}
+
+const btnPix = document.getElementById('pix');
+btnPix.addEventListenera('click', formaPagamento);
+const btnCredito = document.getElementById('credito');
+btnPix.addEventListener('click',formapagamento);
+const btnBoleto = document.getElementByld('boleto');
+btnPix.addEventListener('click', formaPagamento);
+
+function formaPagamento() {
+    const modal = bootstrap.Modal.getInstance(
+        document.getElementByld('ExemploModalCentralizado'),
+    );
+    if (modal) {
+        modal.hide();
+        alert('Compra Finalizada');
+    }
+}
