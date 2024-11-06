@@ -1,5 +1,4 @@
 // Carregar o carrinho do localStorage
-//https://www.invertexto.com/qwws21
 let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 let total = carrinho.reduce(
   (acc, item) => acc + item.preco * item.quantidade,
@@ -200,4 +199,86 @@ document.addEventListener('DOMContentLoaded', () => {
   for (let produtoId in estoqueProdutos) {
     atualizarEstoque(produtoId);
   }
+});
+
+// Variáveis globais
+const botaoLogin = document.getElementById('botaoLogin');
+const botaoSair = document.getElementById('botaoSair');
+const loginForm = document.getElementById('loginForm');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const nomeUser = document.getElementById('nomeUser');
+
+// Função para exibir ou esconder os botões de login e sair
+function atualizarBotoesLogin() {
+  const usuario = localStorage.getItem('usuario');
+  if (usuario) {
+    botaoLogin.style.display = 'none'; // Esconde o botão de login
+    botaoSair.style.display = 'inline-block'; // Exibe o botão de sair
+    nomeUser.innerText = usuario;
+  } else {
+    botaoLogin.style.display = 'inline-block'; // Exibe o botão de login
+    botaoSair.style.display = 'none'; // Esconde o botão de sair
+    nomeUser.innerText = '';
+  }
+}
+
+// Função de login
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const usuario = usernameInput.value.trim();
+  const senha = passwordInput.value.trim();
+
+  if (usuario && senha) {
+    localStorage.setItem('usuario', usuario); // Armazena o nome de usuário no localStorage
+    atualizarBotoesLogin();
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById('loginModal'),
+    );
+    modal.hide(); // Fecha o modal
+  }
+});
+
+// Função para logout
+function sair() {
+  localStorage.removeItem('usuario'); // Remove o usuário do localStorage
+  atualizarBotoesLogin();
+}
+
+// Função para limpar os campos de login
+function limparFormularioLogin() {
+  usernameInput.value = '';
+  passwordInput.value = '';
+}
+
+// Ouvinte para o evento de fechamento do modal
+const loginModal = document.getElementById('loginModal');
+loginModal.addEventListener('hidden.bs.modal', limparFormularioLogin);
+
+// Atualizar os botões de login ao carregar a página
+document.addEventListener('DOMContentLoaded', atualizarBotoesLogin);
+
+// Função para exibir ou esconder os botões de login, sair e finalizar compra
+function atualizarBotoesLogin() {
+  const usuario = localStorage.getItem('usuario');
+  const botaoFinalizarCompra = document.getElementById('finalizarCompra');
+
+  if (usuario) {
+    botaoLogin.style.display = 'none'; // Esconde o botão de login
+    botaoSair.style.display = 'inline-block'; // Exibe o botão de sair
+    nomeUser.innerText = usuario;
+    botaoFinalizarCompra.style.display = 'inline-block'; // Exibe o botão de finalizar compra
+  } else {
+    botaoLogin.style.display = 'inline-block'; // Exibe o botão de login
+    botaoSair.style.display = 'none'; // Esconde o botão de sair
+    nomeUser.innerText = '';
+    botaoFinalizarCompra.style.display = 'none'; // Esconde o botão de finalizar compra
+  }
+}
+
+// Atualizar os botões de login ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+  atualizarBotoesLogin(); // Atualiza a visibilidade dos botões
+  atualizarCarrinho(); // Atualiza a lista do carrinho
+  atualizarQuantidadeCarrinho(); // Atualiza a quantidade do carrinho
 });
