@@ -187,4 +187,8 @@ button:hover {
     opacity: 0.9;
 }
 
-
+/* cor roda pé */
+.card-body{
+    background: black;
+    color: white;
+}
